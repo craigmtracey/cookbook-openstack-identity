@@ -4,6 +4,7 @@
 #
 # Copyright 2012, Rackspace US, Inc.
 # Copyright 2012, AT&T, Inc.
+# Copyright 2013, Craig Tracey <craigtracey@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -188,6 +189,6 @@ def _build_request resource, request
   admin_token = resource.bootstrap_token
   request.add_field 'X-Auth-Token', admin_token
   request.add_field 'Content-type', 'application/json'
-  request.add_field 'user-agent', 'Chef keystone_credentials'
+  request.add_field 'user-agent', 'Chef openstack_identity_credentials'
   request
 end

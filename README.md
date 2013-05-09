@@ -102,7 +102,7 @@ Register users, tenants, roles, services and endpoints with Keystone
 ### Examples
 
     # Create 'openstack' tenant
-    keystone_register "Register 'openstack' Tenant" do
+    openstack_identity_register "Register 'openstack' Tenant" do
       auth_host "192.168.1.10"
       auth_port "35357"
       auth_protocol "http"
@@ -115,7 +115,7 @@ Register users, tenants, roles, services and endpoints with Keystone
     end
 
     # Create 'admin' user
-    keystone_register "Register 'admin' User" do
+    openstack_identity_register "Register 'admin' User" do
       auth_host "192.168.1.10"
       auth_port "35357"
       auth_protocol "http"
@@ -129,7 +129,7 @@ Register users, tenants, roles, services and endpoints with Keystone
     end
 
     # Create 'admin' role
-    keystone_register "Register 'admin' Role" do
+    openstack_identity_register "Register 'admin' Role" do
       auth_host "192.168.1.10"
       auth_port "35357"
       auth_protocol "http"
@@ -141,7 +141,7 @@ Register users, tenants, roles, services and endpoints with Keystone
 
 
     # Grant 'admin' role to 'admin' user in the 'openstack' tenant
-    keystone_register "Grant 'admin' Role to 'admin' User" do
+    openstack_identity_register "Grant 'admin' Role to 'admin' User" do
       auth_host "192.168.1.10"
       auth_port "35357"
       auth_protocol "http"
@@ -154,7 +154,7 @@ Register users, tenants, roles, services and endpoints with Keystone
     end
 
     # Create 'identity' service
-    keystone_register "Register Identity Service" do
+    openstack_identity_register "Register Identity Service" do
       auth_host "192.168.1.10"
       auth_port "35357"
       auth_protocol "http"
@@ -167,7 +167,7 @@ Register users, tenants, roles, services and endpoints with Keystone
     end
 
     # Create 'identity' endpoint
-    keystone_register "Register Identity Endpoint" do
+    openstack_identity_register "Register Identity Endpoint" do
       auth_host "192.168.1.10"
       auth_port "35357"
       auth_protocol "http"
@@ -206,7 +206,7 @@ Create EC2 credentials for a given user in the specified tenant
 
 ### Examples
 
-    keystone_credentials "Create EC2 credentials for 'admin' user" do
+    openstack_identity_credentials "Create EC2 credentials for 'admin' user" do
       auth_host "192.168.1.10"
       auth_port "35357"
       auth_protocol "http"

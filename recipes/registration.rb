@@ -4,6 +4,7 @@
 #
 # Copyright 2012, Rackspace US, Inc.
 # Copyright 2012, Opscode, Inc.
+# Copyright 2013, Craig Tracey <craigtracey@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +36,7 @@ auth_uri = ::URI.decode identity_admin_endpoint.to_s
 bootstrap_token = secret "secrets", "keystone_bootstrap_token"
 
 # We need to bootstrap the keystone admin user so that calls
-# to keystone_register will succeed, since those provider calls
+# to openstack_identity_register will succeed, since those provider calls
 # use the admin tenant/user/pass to get an admin token.
 bash "bootstrap-keystone-admin" do
   # A shortcut bootstrap command was added to python-keystoneclient
@@ -77,7 +78,7 @@ end
 
 node["keystone"]["tenants"].each do |tenant_name|
   ## Add openstack tenant ##
-  keystone_register "Register '#{tenant_name}' Tenant" do
+  openstack_identity_register "Register '#{tenant_name}' Tenant" do
     auth_uri auth_uri
     bootstrap_token bootstrap_token
     tenant_name tenant_name
@@ -89,7 +90,7 @@ node["keystone"]["tenants"].each do |tenant_name|
 end
 
 node["keystone"]["roles"].each do |role_key|
-  keystone_register "Register '#{role_key.to_s}' Role" do
+  openstack_identity_register "Register '#{role_key.to_s}' Role" do
     auth_uri auth_uri
     bootstrap_token bootstrap_token
     role_name role_key
@@ -99,7 +100,7 @@ node["keystone"]["roles"].each do |role_key|
 end
 
 node["keystone"]["users"].each do |username, user_info|
-  keystone_register "Register '#{username}' User" do
+  openstack_identity_register "Register '#{username}' User" do
     auth_uri auth_uri
     bootstrap_token bootstrap_token
     user_name username
@@ -112,7 +113,7 @@ node["keystone"]["users"].each do |username, user_info|
 
   user_info["roles"].each do |rolename, tenant_list|
     tenant_list.each do |tenantname|
-      keystone_register "Grant '#{rolename}' Role to '#{username}' User in '#{tenantname}' Tenant" do
+      openstack_identity_register "Grant '#{rolename}' Role to '#{username}' User in '#{tenantname}' Tenant" do
         auth_uri auth_uri
         bootstrap_token bootstrap_token
         user_name username
@@ -125,7 +126,7 @@ node["keystone"]["users"].each do |username, user_info|
   end
 end
 
-keystone_register "Register Identity Service" do
+openstack_identity_register "Register Identity Service" do
   auth_uri auth_uri
   bootstrap_token bootstrap_token
   service_name "keystone"
@@ -143,7 +144,7 @@ Chef::Log.info "Keystone AdminURL: #{identity_admin_endpoint.to_s}"
 Chef::Log.info "Keystone InternalURL: #{identity_endpoint.to_s}"
 Chef::Log.info "Keystone PublicURL: #{identity_endpoint.to_s}"
 
-keystone_register "Register Identity Endpoint" do
+openstack_identity_register "Register Identity Endpoint" do
   auth_uri auth_uri
   bootstrap_token bootstrap_token
   service_type "identity"
@@ -156,7 +157,7 @@ keystone_register "Register Identity Endpoint" do
 end
 
 node["keystone"]["users"].each do |username, user_info|
-  keystone_credentials "Create EC2 credentials for '#{username}' user" do
+  openstack_identity_credentials "Create EC2 credentials for '#{username}' user" do
     auth_uri auth_uri
     bootstrap_token bootstrap_token
     user_name username
