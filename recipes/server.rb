@@ -4,6 +4,7 @@
 #
 # Copyright 2012, Rackspace US, Inc.
 # Copyright 2012, Opscode, Inc.
+# Copyright 2013, Craig Tracey <craigtracey@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -107,11 +108,7 @@ sql_connection = db_uri("identity", db_user, db_pass)
 
 bootstrap_token = secret "secrets", "keystone_bootstrap_token"
 
-bind_interface = node["keystone"]["bind_interface"]
-interface_node = node["network"]["interfaces"][bind_interface]["addresses"]
-ip_address = interface_node.select do |address, data|
-  data['family'] == "inet"
-end[0][0]
+ip_address = interface_ip node["keystone"]["bind_interface"]
 
 # If the search role is set, we search for memcache
 # servers via a Chef search. If not, we look at the
