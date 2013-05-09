@@ -69,6 +69,7 @@ default["keystone"]["signing"]["ca_password"] = nil
 default['keystone']['identity']['backend'] = 'sql'
 default['keystone']['token']['backend'] = 'sql'
 default['keystone']['catalog']['backend'] = 'sql'
+default['keystone']['trust']['backend'] = 'sql'
 
 # platform defaults
 case platform
